@@ -777,9 +777,9 @@ main() {
 
   # Install V2Ray from a local file, but still need to make sure the network is available
   if [[ "$LOCAL_INSTALL" -eq '1' ]]; then
-    echo 'warn: Install V2Ray from a local file, but still need to make sure the network is available.'
-    echo -n 'warn: Please make sure the file is valid because we cannot confirm it. (Press any key) ...'
-    read -r
+  #  echo 'warn: Install V2Ray from a local file, but still need to make sure the network is available.'
+  #  echo -n 'warn: Please make sure the file is valid because we cannot confirm it. (Press any key) ...'
+  #  read -r
     install_software 'unzip' 'unzip'
     decompression "$LOCAL_FILE"
   else
