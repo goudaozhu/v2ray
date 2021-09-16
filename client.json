@@ -1,7 +1,7 @@
 {
     "type": "ws",
     "dialer": "",
-    "listen": ":80",
+    "listen": ":12345",
     "secret": "api/ws|469df0f3-902a-4264-8bdf-dc85a6bf9a8f",
     "method": "aes-128-gcm",
     "options": ""
