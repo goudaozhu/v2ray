@@ -8,7 +8,7 @@ for cmd in echo /bin/echo; do
         break
     fi
 done
-
+DNS=$1
 CSI=$($echo -e "\033[")
 CEND="${CSI}0m"
 CDGREEN="${CSI}32m"
@@ -50,6 +50,22 @@ else
     exit 1
 fi
 
+if [[ $DNS -eq 1 ]]; then
+rm -f /etc/resolv.conf
+cat >/etc/resolv.conf <<EOF
+nameserver 223.5.5.5
+nameserver 223.6.6.6
+EOF
+else
+rm -f /etc/resolv.conf
+cat >/etc/resolv.conf <<EOF
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 2001:4860:4860::8888
+nameserver 2001:4860:4860::8844
+EOF
+fi
+
 OUT_ALERT "[信息] 正在更新系统中！"
 if [[ ${release} == "centos" ]]; then
     yum makecache
@@ -75,13 +91,13 @@ systemctl enable --now haveged
 
 OUT_ALERT "[信息] 正在优化系统参数中！"
 chattr -i /etc/sysctl.conf
-cat > /etc/sysctl.conf << EOF
+cat >/etc/sysctl.conf <<EOF
 vm.swappiness = 0
-fs.file-max = 10240000
+fs.file-max = 1024000
 net.core.rmem_max = 4194304
 net.core.wmem_max = 4194304
 net.core.netdev_max_backlog = 250000
-net.core.somaxconn = 10240000
+net.core.somaxconn = 4096
 net.core.default_qdisc = fq
 net.ipv4.conf.all.rp_filter = 0
 net.ipv4.conf.default.rp_filter = 0
@@ -112,8 +128,9 @@ net.ipv4.tcp_wmem = 4096 65536 4194304
 net.ipv4.tcp_congestion_control = bbr
 net.ipv6.conf.all.forwarding = 1
 net.ipv6.conf.default.forwarding = 1
+net.ipv4.ip_forward=1
 EOF
-cat > /etc/security/limits.conf << EOF
+cat >/etc/security/limits.conf <<EOF
 * soft nofile 512000
 * hard nofile 512000
 * soft nproc 512000
@@ -123,18 +140,11 @@ root hard nofile 512000
 root soft nproc 512000
 root hard nproc 512000
 EOF
-cat > /etc/systemd/journald.conf <<EOF
+cat >/etc/systemd/journald.conf <<EOF
 [Journal]
 SystemMaxUse=384M
 SystemMaxFileSize=128M
 ForwardToSyslog=no
-EOF
-rm -f /etc/resolv.conf
-cat > /etc/resolv.conf <<EOF
-nameserver 8.8.8.8
-nameserver 8.8.4.4
-nameserver 2001:4860:4860::8888
-nameserver 2001:4860:4860::8844
 EOF
 
 sysctl -p
