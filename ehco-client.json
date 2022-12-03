@@ -7,10 +7,10 @@
             "listen_type": "ws",
             "transport_type": "raw",
             "tcp_remotes": [
-                "127.0.0.1:88"
+                "127.0.0.1:80"
             ],
             "udp_remotes": [
-                "127.0.0.1:88"
+                "127.0.0.1:80"
             ]
         }		
 		
