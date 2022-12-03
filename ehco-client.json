@@ -1,0 +1,20 @@
+{
+    "web_port": 9000,
+    "relay_configs": [
+
+		{
+            "listen": "0.0.0.0:12345",
+            "listen_type": "ws",
+            "transport_type": "raw",
+            "tcp_remotes": [
+                "127.0.0.1:88"
+            ],
+            "udp_remotes": [
+                "127.0.0.1:88"
+            ]
+        }		
+		
+    ]
+ 
+}
+
