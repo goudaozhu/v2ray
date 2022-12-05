@@ -1,0 +1,4 @@
+#!/bin/bash
+# fix Debian keycode 00 warning
+screen -S ehco  /root/ehco -c /root/ehco-client.json 
+exit 0
