@@ -10,5 +10,6 @@
 #  bits.
 # 
 #  By default this script does nothing.
+/usr/bin/screen -S ehco  /root/ehco -c /root/ehco-client.json
 ulimit -n 65535
 exit 0
