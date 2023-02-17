@@ -1,0 +1,13 @@
+# Ehco service
+[Unit]
+Description=ehco
+After=network.target
+
+[Service]
+LimitNOFILE=655350
+ExecStart=/root/ehco -c /root/client.json
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
