@@ -1,0 +1,15 @@
+[Unit]
+Description=ehco
+After=network.target
+  
+[Service]
+LimitNOFILE=65535
+Type=forking
+ExecStart=/usr/sbin/ehco -c /root/ehco.json >/root/ehco.log 2>&1
+PrivateTmp=true 
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
+
+
